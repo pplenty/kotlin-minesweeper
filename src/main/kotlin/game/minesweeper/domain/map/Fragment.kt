@@ -4,6 +4,7 @@ data class Fragment(
     private val coordinate: Coordinate,
     private var _hasMine: Boolean = false,
     private var borderMine: Int = 0,
+    private var _isOpen: Boolean = false,
 ) {
 
     fun setMine() {
@@ -11,6 +12,12 @@ data class Fragment(
     }
 
     fun hasMine() = _hasMine
+
+    fun open() {
+        _isOpen = true
+    }
+
+    fun isClosed() = !_isOpen
 
     fun included(coordinates: List<Coordinate>) = coordinates.contains(coordinate)
 
@@ -21,6 +28,8 @@ data class Fragment(
     }
 
     fun borderMine() = borderMine
+
+    fun match(coordinate: Coordinate) = this.coordinate == coordinate
 
     companion object {
         fun of(x: Int, y: Int) = Fragment(Coordinate(x, y))

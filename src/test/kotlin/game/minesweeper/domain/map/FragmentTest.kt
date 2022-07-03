@@ -19,4 +19,17 @@ internal class FragmentTest {
         fragment.setMine()
         assertThat(fragment.hasMine()).isTrue
     }
+
+    @Test
+    fun `처음 생성하면 닫힌 상태`() {
+        val fragment = Fragment.of(1, 1)
+        assertThat(fragment.isClosed()).isTrue
+    }
+
+    @Test
+    fun `오픈하면 상태 변화`() {
+        val fragment = Fragment.of(1, 1)
+        fragment.open()
+        assertThat(fragment.isClosed()).isFalse
+    }
 }

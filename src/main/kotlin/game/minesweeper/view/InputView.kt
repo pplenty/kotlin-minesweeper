@@ -16,4 +16,11 @@ object InputView {
         println("지뢰는 몇 개인가요?")
         return readln().toInt()
     }
+
+    fun readCoordinate(): List<Int> {
+        print("\nopen: ")
+        return readln().split(DELIMITER).map { it.trim().toInt() }
+    }
+
+    private const val DELIMITER = ","
 }
