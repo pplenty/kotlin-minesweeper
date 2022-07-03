@@ -18,6 +18,10 @@ class MineMap(private val config: MapConfig, private val _rows: List<Row>) {
 
     fun open(coordinate: Coordinate) = _rows.firstNotNullOf { it.open(coordinate) }
 
+    fun countOfClosed() = _rows.flatMap { it.fragments() }
+        .filterNot { it.hasMine() }
+        .count { it.isClosed() }
+
     companion object {
         private const val START_ROW_NUM = 1
         fun create(config: MapConfig) = MineMap(

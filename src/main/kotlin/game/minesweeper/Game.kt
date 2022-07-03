@@ -19,10 +19,15 @@ class Game(config: MapConfig, private val mineCount: Int) {
 
     fun start() {
         ResultView.start()
+        var isAllOpen = false
         while (openFragment()) {
             ResultView.drawMap(mineMap)
+            isAllOpen = mineMap.countOfClosed() == 0
+            if (isAllOpen) {
+                break
+            }
         }
-        ResultView.over()
+        ResultView.finish(isAllOpen)
     }
 
     private fun openFragment(): Boolean {

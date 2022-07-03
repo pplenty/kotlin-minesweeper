@@ -9,8 +9,8 @@ object ResultView {
         println("지뢰찾기 게임 시작")
     }
 
-    fun over() {
-        println("Lose Game.")
+    fun finish(isAllOpen: Boolean) {
+        println(if (isAllOpen) "Win Game." else "Lose Game.")
     }
 
     fun drawMap(mineMap: MineMap) {
@@ -20,7 +20,7 @@ object ResultView {
     }
 
     private fun formatFragment(fragment: Fragment) = when {
-//        fragment.isClosed() -> "□"
+        fragment.isClosed() -> "□"
         fragment.hasMine() -> "*"
         else -> fragment.borderMine().toString()
     }
