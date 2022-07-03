@@ -10,9 +10,7 @@ data class Row(private val _fragments: List<Fragment>) {
             .forEach { it.setMine() }
     }
 
-    fun open(coordinate: Coordinate) {
-        _fragments.firstOrNull { it.match(coordinate) }?.open()
-    }
+    fun open(coordinate: Coordinate) = _fragments.firstOrNull { it.match(coordinate) }?.open()
 
     companion object {
         private const val START_COLUMN_NUM = 1

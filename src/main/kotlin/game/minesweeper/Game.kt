@@ -19,11 +19,15 @@ class Game(config: MapConfig, private val mineCount: Int) {
 
     fun start() {
         ResultView.start()
-        while (true) {
-            val open = InputView.readCoordinate()
-            mineMap.open(Coordinate(open[0], open[1]))
+        while (openFragment()) {
             ResultView.drawMap(mineMap)
         }
+        ResultView.over()
+    }
+
+    private fun openFragment(): Boolean {
+        val open = InputView.readCoordinate()
+        return mineMap.open(Coordinate(open[0], open[1]))
     }
 }
 

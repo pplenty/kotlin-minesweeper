@@ -13,8 +13,9 @@ data class Fragment(
 
     fun hasMine() = _hasMine
 
-    fun open() {
+    fun open(): Boolean {
         _isOpen = true
+        return !hasMine()
     }
 
     fun isClosed() = !_isOpen

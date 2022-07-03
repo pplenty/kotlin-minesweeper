@@ -16,9 +16,7 @@ class MineMap(private val config: MapConfig, private val _rows: List<Row>) {
             .forEach { it.increaseBorderMine(it.count(borders)) }
     }
 
-    fun open(coordinate: Coordinate) {
-        _rows.forEach { it.open(coordinate) }
-    }
+    fun open(coordinate: Coordinate) = _rows.firstNotNullOf { it.open(coordinate) }
 
     companion object {
         private const val START_ROW_NUM = 1
