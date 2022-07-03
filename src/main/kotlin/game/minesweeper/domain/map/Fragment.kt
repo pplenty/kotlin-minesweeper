@@ -13,9 +13,25 @@ data class Fragment(
 
     fun hasMine() = _hasMine
 
-    fun open(): Boolean {
+    private fun isEmpty() = borderMine == 0
+
+    fun open(): OpenResult {
         _isOpen = true
-        return !hasMine()
+        return when {
+            hasMine() -> OpenResult.BOOM
+            isEmpty() -> OpenResult.EMPTY
+            else -> OpenResult.NOT_EMPTY
+        }
+    }
+
+    fun openChain(maxHeight: Int, maxWidth: Int): List<Coordinate> {
+        if (!_isOpen) {
+            _isOpen = true
+            if (isEmpty()) {
+                return coordinate.findBorder(maxHeight, maxWidth)
+            }
+        }
+        return emptyList()
     }
 
     fun isClosed() = !_isOpen
@@ -35,4 +51,8 @@ data class Fragment(
     companion object {
         fun of(x: Int, y: Int) = Fragment(Coordinate(x, y))
     }
+}
+
+enum class OpenResult {
+    EMPTY, NOT_EMPTY, BOOM
 }

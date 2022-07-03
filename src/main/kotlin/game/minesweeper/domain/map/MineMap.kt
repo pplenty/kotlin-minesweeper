@@ -16,7 +16,20 @@ class MineMap(private val config: MapConfig, private val _rows: List<Row>) {
             .forEach { it.increaseBorderMine(it.count(borders)) }
     }
 
-    fun open(coordinate: Coordinate) = _rows.firstNotNullOf { it.open(coordinate) }
+    fun open(coordinate: Coordinate): Boolean {
+        val result = _rows.firstNotNullOf { it.open(coordinate) }
+        if (result == OpenResult.EMPTY) {
+            val found = coordinate.findBorder(config.height, config.width)
+            found.forEach { openChain(it) }
+        }
+        return result != OpenResult.BOOM
+    }
+
+    private fun openChain(coordinate: Coordinate) {
+        _rows.mapNotNull { it.openChain(coordinate, config.height, config.width) }
+            .flatten()
+            .forEach { openChain(it) }
+    }
 
     fun countOfClosed() = _rows.flatMap { it.fragments() }
         .filterNot { it.hasMine() }
